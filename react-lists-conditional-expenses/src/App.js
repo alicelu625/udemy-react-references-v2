@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 import NewExpense from './components/NewExpense/NewExpense';
 import Expenses from './components/Expenses/Expenses';
@@ -26,8 +26,10 @@ const DUMMY_EXPENSES = [
 ];
 
 const App = () => {
+  //initialize expenses with the dummy data
   const [expenses, setExpenses] = useState(DUMMY_EXPENSES);
 
+  //when new expense is added, add the new expense to the beginning of the expenses array
   const addExpenseHandler = (expense) => {
     setExpenses((prevExpenses) => {
       return [expense, ...prevExpenses];
