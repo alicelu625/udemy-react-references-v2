@@ -6,7 +6,7 @@ const Button = (props) => {
   return (
     <button
       className={classes.button}
-      type={props.type || 'button'}
+      type={props.type || 'button'} //type passed from props OR fallback value
       onClick={props.onClick}
     >
       {props.children}

@@ -6,8 +6,10 @@ import UsersList from './components/Users/UsersList';
 function App() {
   const [usersList, setUsersList] = useState([]);
 
+  //add user to list with parameters from AddUser component
   const addUserHandler = (uName, uAge) => {
     setUsersList((prevUsersList) => {
+      //return old list + new user
       return [
         ...prevUsersList,
         { name: uName, age: uAge, id: Math.random().toString() },
