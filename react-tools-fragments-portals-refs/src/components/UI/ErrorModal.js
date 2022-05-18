@@ -5,10 +5,12 @@ import Card from './Card';
 import Button from './Button';
 import classes from './ErrorModal.module.css';
 
+//define Backdrop component
 const Backdrop = (props) => {
   return <div className={classes.backdrop} onClick={props.onConfirm} />;
 };
 
+//define ModalOverlay component
 const ModalOverlay = (props) => {
   return (
     <Card className={classes.modal}>
@@ -28,10 +30,12 @@ const ModalOverlay = (props) => {
 const ErrorModal = (props) => {
   return (
     <React.Fragment>
+      {/*portal Backdrop component to be rendered in element in DOM with id='backdrop-root'*/}
       {ReactDOM.createPortal(
         <Backdrop onConfirm={props.onConfirm} />,
         document.getElementById('backdrop-root')
       )}
+      {/*portal ModalOverlay component to be rendered in element in DOM with id='overlay-root'*/}
       {ReactDOM.createPortal(
         <ModalOverlay
           title={props.title}

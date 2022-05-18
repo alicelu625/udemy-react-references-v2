@@ -7,6 +7,8 @@ import Wrapper from '../Helpers/Wrapper';
 import classes from './AddUser.module.css';
 
 const AddUser = (props) => {
+  //initialize references
+  //objects with a current prop holding the actual value that the ref is connected with
   const nameInputRef = useRef();
   const ageInputRef = useRef();
 
@@ -14,8 +16,13 @@ const AddUser = (props) => {
 
   const addUserHandler = (event) => {
     event.preventDefault();
+
+    //pull values from input
+    //can access value stored in element on submit (without needing to log every keystroke which uses states)
     const enteredName = nameInputRef.current.value;
     const enteredUserAge = ageInputRef.current.value;
+
+    //input validation
     if (enteredName.trim().length === 0 || enteredUserAge.trim().length === 0) {
       setError({
         title: 'Invalid input',
@@ -30,7 +37,11 @@ const AddUser = (props) => {
       });
       return;
     }
+
+    //add user
     props.onAddUser(enteredName, enteredUserAge);
+
+    //manipulate the DOM to reset value entered by user
     nameInputRef.current.value = '';
     ageInputRef.current.value = '';
   };
@@ -51,6 +62,7 @@ const AddUser = (props) => {
       <Card className={classes.input}>
         <form onSubmit={addUserHandler}>
           <label htmlFor="username">Username</label>
+          {/*ref property connects to reference*/}
           <input id="username" type="text" ref={nameInputRef} />
           <label htmlFor="age">Age (Years)</label>
           <input id="age" type="number" ref={ageInputRef} />
