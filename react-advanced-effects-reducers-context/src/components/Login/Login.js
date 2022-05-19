@@ -12,6 +12,7 @@ import AuthContext from '../../store/auth-context';
 import Input from '../UI/Input/Input';
 import classes from './Login.module.css';
 
+//email validation
 const emailReducer = (state, action) => {
   if (action.type === 'USER_INPUT') {
     return { value: action.val, isValid: action.val.includes('@') };
@@ -22,6 +23,7 @@ const emailReducer = (state, action) => {
   return { value: '', isValid: false };
 };
 
+//password validation
 const passwordReducer = (state, action) => {
   if (action.type === 'USER_INPUT') {
     return { value: action.val, isValid: action.val.trim().length > 6 };
@@ -53,9 +55,11 @@ const Login = (props) => {
   const emailInputRef = useRef();
   const passwordInputRef = useRef();
 
+  //test side effect function
   useEffect(() => {
     console.log('EFFECT RUNNING');
 
+    //can return cleanup function to run before the useEffect function re-runs
     return () => {
       console.log('EFFECT CLEANUP');
     };
@@ -64,18 +68,24 @@ const Login = (props) => {
   const { isValid: emailIsValid } = emailState;
   const { isValid: passwordIsValid } = passwordState;
 
+  //will run if email or password validity changes
   useEffect(() => {
+    //check validity when user pauses typing for 5s (so it's not ran every keystroke)
     const identifier = setTimeout(() => {
       console.log('Checking form validity!');
       setFormIsValid(emailIsValid && passwordIsValid);
     }, 500);
 
+    //return must be a function
+    //cleanup function - runs before useEffect executes function next time
     return () => {
       console.log('CLEANUP');
+      //clear timer that was set in the last side effect function
       clearTimeout(identifier);
     };
   }, [emailIsValid, passwordIsValid]);
 
+  //when email input changes
   const emailChangeHandler = (event) => {
     dispatchEmail({ type: 'USER_INPUT', val: event.target.value });
 
@@ -84,6 +94,7 @@ const Login = (props) => {
     // );
   };
 
+  //when password input changes
   const passwordChangeHandler = (event) => {
     dispatchPassword({ type: 'USER_INPUT', val: event.target.value });
 
